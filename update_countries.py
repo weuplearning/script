@@ -220,15 +220,17 @@ for enrollment in course_enrollments :
             custom_field['country'] = country[str(next(iter(country)))]
             userJson.country = country[str(next(iter(country)))]
             userJson.custom_field = json.dumps(custom_field)
+            userJson.save()
             break
-            #userJson.save()
         else:
+            #Handling special case due to an encoding problem
             if str(countryUserCustom)[:2] == 'Su':
                 addingToList = True
                 custom_field['country'] = 'SE'
                 userJson.country = 'SE'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******Sweden******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[:4] == 'Espa':
                 addingToList = True
@@ -236,6 +238,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'ES'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******Spain******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[:5] == 'Belgi':
                 addingToList = True
@@ -243,6 +246,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'BE'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******Belgium******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[:3] == 'Arm':
                 addingToList = True
@@ -250,6 +254,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'AM'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******Armenia******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[:5] == 'Polyn':
                 addingToList = True
@@ -257,6 +262,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'PF'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******French Polynesia******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[:10] == 'Etats Unis':
                 addingToList = True
@@ -264,6 +270,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'US'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******United state of america******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[:4] == 'Norv':
                 addingToList = True
@@ -271,6 +278,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'NO'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******Norway******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[:5] == 'Bahre':
                 addingToList = True
@@ -278,6 +286,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'BH'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******Bahrein******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[:1] == 'S' and str(countryUserCustom)[-3:] == 'gal':
                 addingToList = True
@@ -285,6 +294,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'SN'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******Senegal******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[:1] == 'R' and str(countryUserCustom)[-3:] == 'que':
                 addingToList = True
@@ -292,6 +302,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'CE'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******Czechia******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom)[-12:] == 'land Islands':
                 addingToList = True
@@ -299,6 +310,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'AX'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******Aland island******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom) == 'None':
                 addingToList = True
@@ -306,6 +318,7 @@ for enrollment in course_enrollments :
                 userJson.country = 'FR'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******None******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
             elif str(countryUserCustom) == '0':
                 addingToList = True
@@ -313,11 +326,13 @@ for enrollment in course_enrollments :
                 userJson.country = 'FR'
                 userJson.custom_field = json.dumps(custom_field)
                 log.info('-------------------------------------------------------------------------******0******-------------------------------------------------------------------------------------')
+                userJson.save()
                 break
 
             elif not addingToList:
                 addingToList = False
     if not addingToList:
+        #Warning log for more information
         log.warning("{} is not in the correlation table !".format(str(countryUserCustom)))
         log.warning("Adding user {} to the list to check".format(user.email))
         userInfo = {user.email : [countryUserCustom,userJson.country]}
